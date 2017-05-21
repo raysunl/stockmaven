@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.sunstock.dao.mapper.StockCodeMapper">
+	<resultMap id = "stockMap" type="HashMap">
+		<result property ="key" column = "stockName" />
+		<result property ="value" column = "stockCode" />		
+	</resultMap>
+                                     
+    <insert id ="insertStockCode" parameterType ="java.util.List">
+        insert into stockcode
+        <trim prefix = "(" suffix = ")" suffixOverrides = ",">
+               CODE,
+               NAME
+        </trim> values
+        <foreach collection= "list" item = "item" index = "index" separator = ",">
+           (
+                #{item.stockCode, jdbcType = VARCHAR},
+                #{item.stockName, jdbcType = VARCHAR}
+            )
+        </foreach>
+    </insert>
+        <select id="queryStockCodes" resultMap="stockMap">
+    	select * from stockcode where 1 = 1 
+    </select>
+
+</mapper>
